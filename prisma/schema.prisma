@@ -1,0 +1,71 @@
+// Prisma Schema for Weather Intelligence Dashboard
+// Production Supabase (PostgreSQL) Configuration
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model WeatherHistory {
+  id                 String   @id @default(uuid())
+  location           String   // Display location or full search query
+  city               String?
+  country            String?
+  latitude           Float
+  longitude          Float
+  temperature        Float    // Celsius
+  humidity           Float    // Percentage
+  pressure           Float    // hPa
+  visibility         Float    // meters or km
+  windSpeed          Float    // km/h or m/s
+  windDirection      Float    // Degrees
+  weatherCondition   String   // Clear, Rain, Clouds, Snow, etc.
+  weatherDescription String   // Detailed text summary
+  icon               String   // Weather condition icon identifier
+  uvIndex            Float    // UV index value
+  airQuality         String   // AQI index or category descriptor
+  sunrise            String   // ISO string or formatted time
+  sunset             String   // ISO string or formatted time
+  searchedAt         DateTime @default(now())
+  startDate          DateTime? // Optional user-specified query date range start
+  endDate            DateTime? // Optional user-specified query date range end
+  forecast           Json     // Native PostgreSQL Json / JsonB forecast payload
+  notes              String?  // Custom user notes attached to log entry
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([searchedAt])
+  @@index([latitude, longitude])
+  @@index([city])
+}
+
+model SavedLocations {
+  id        String   @id @default(uuid())
+  name      String   // Custom location nickname / alias
+  city      String
+  country   String
+  latitude  Float
+  longitude Float
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([latitude, longitude])
+  @@index([city])
+}
+
+model ExportLogs {
+  id          String   @id @default(uuid())
+  format      String   // JSON | CSV | PDF
+  recordCount Int      // Total records included in export
+  status      String   @default("SUCCESS") // SUCCESS | FAILED
+  exportedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([exportedAt])
+}
