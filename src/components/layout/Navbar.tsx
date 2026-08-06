@@ -29,7 +29,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          <Link href="/" className="tour-nav-logo flex items-center space-x-3 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform duration-300">
               <CloudSun className="w-6 h-6 animate-pulse" />
             </div>
@@ -54,7 +54,7 @@ export function Navbar() {
                     isActive
                       ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold shadow-sm'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
-                  }`}
+                  } ${item.label === 'History' ? 'tour-nav-history' : ''}`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-blue-500' : ''}`} />
                   <span>{item.label}</span>

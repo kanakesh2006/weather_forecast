@@ -13,6 +13,7 @@ import { MediaSection } from '@/components/media/MediaSection';
 import { FullWeatherResponse } from '@/types/weather.types';
 import { AlertTriangle, CloudSun } from 'lucide-react';
 
+import { MorphingSpinner } from '@/components/ui/morphing-spinner';
 import { GradientShimmer } from '@/components/ui/gradient-shimmer';
 
 export default function HomePage() {
@@ -86,9 +87,19 @@ export default function HomePage() {
         </div>
       )}
 
+      {/* Loading State */}
+      {loading && !weatherData && (
+        <div className="flex flex-col items-center justify-center py-20 gap-4 animate-in fade-in-50">
+          <MorphingSpinner size="lg" />
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+            Gathering intelligence...
+          </p>
+        </div>
+      )}
+
       {/* Weather Dashboard Core Sections */}
       {weatherData && (
-        <div className="space-y-8">
+        <div className={`space-y-8 ${loading ? 'opacity-50 pointer-events-none transition-opacity' : ''}`}>
           {/* Current Weather Hero */}
           <CurrentWeatherCard data={weatherData} />
 
@@ -105,13 +116,19 @@ export default function HomePage() {
           <DailyForecastGrid daily={weatherData.forecast.daily} />
 
           {/* Trend Charts */}
-          <WeatherCharts daily={weatherData.forecast.daily} hourly={weatherData.forecast.hourly} />
+          <div id="tour-charts">
+            <WeatherCharts daily={weatherData.forecast.daily} hourly={weatherData.forecast.hourly} />
+          </div>
 
           {/* Geospatial Map */}
-          <LocationMap location={weatherData.location} />
+          <div id="tour-map">
+            <LocationMap location={weatherData.location} />
+          </div>
 
           {/* Media & Travel Guide Section */}
-          <MediaSection locationName={weatherData.location.name} />
+          <div id="tour-media">
+            <MediaSection locationName={weatherData.location.name} />
+          </div>
         </div>
       )}
 

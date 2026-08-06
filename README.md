@@ -1,47 +1,113 @@
-# AetherWeather - Weather Intelligence Dashboard
+# 🌤️ AetherWeather — Weather Intelligence & Analytics Engine
 
-A production-ready, full-stack weather intelligence application built for the **Full Stack AI Engineer Technical Assessment**.
+A production-grade, full-stack weather forecasting and climate analytics platform built for the **Full Stack AI Engineer Technical Assessment**.
 
-![Dashboard Preview](https://raw.githubusercontent.com/placeholder/weather-dashboard-preview.png)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15_App_Router-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React 18](https://img.shields.io/badge/React-18.3-blue?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=flat-square&logo=supabase)](https://supabase.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-6.0-2d3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel-000000?style=flat-square&logo=vercel)](https://vercel.com/)
 
 ---
 
-## 🌟 Key Features
+## 🌟 Highlights & Key Features
 
-- 🌤️ **Live Weather & Forecast Metrics**: Current temperature, feels like, humidity, pressure, visibility, wind speed & direction compass, UV index, and Air Quality Index (AQI).
-- 📅 **5-Day Daily & 24-Hour Forecast**: Interactive daily cards and hourly horizontal carousel.
-- 📈 **Recharts Trend Visualizations**: Temperature curve area charts and precipitation probability bar charts.
-- 📍 **Geospatial Intelligence Search**: City names, landmarks (e.g. *Eiffel Tower*, *Taj Mahal*), zip codes, or GPS coordinates with instant autocomplete.
-- 🗺️ **Interactive Maps**: OpenStreetMap Leaflet integration displaying searched coordinates with full-screen view.
-- 🎥 **Travel Guide Media**: YouTube Data API v3 integration for destination travel videos with Unsplash photography fallback.
-- 💾 **Persistent Database Logging**: Supabase PostgreSQL database via Prisma ORM storing every successful query log and user bookmark.
-- 📑 **Dynamic Data Exports**: Server-side JSON, CSV, and formatted PDF report export stream generation.
-- 🌓 **Glassmorphism Dark Mode UI**: Modern Tailwind CSS design system with seamless dark/light theme switching.
+- 🧭 **Interactive Guided Tour**: High-grade interactive feature walkthrough built with `react-joyride`, featuring glassmorphic tooltips and viewport auto-centering for first-time visitors.
+- 🌤️ **Real-Time Weather Metrics**: Live temperature, feels-like, humidity, barometric pressure, visibility, wind speed & direction compass, UV index, and Air Quality Index (AQI).
+- 📅 **5-Day Daily & 24-Hour Hourly Forecasts**: Detailed daily climate cards and smooth 24-hour horizontal forecast carousel.
+- 📆 **Custom Date Range Filter**: Historical and trend search capabilities directly from the search bar interface.
+- 📍 **GPS & Multi-Format Search**: One-click geolocation auto-detect (`navigator.geolocation`), plus support for cities, zip codes, landmarks (e.g. *Eiffel Tower*, *Taj Mahal*), and raw GPS coordinates with debounced autocomplete.
+- 📈 **Recharts Visualizations**: Dynamic temperature trend curves and hourly precipitation probability bar charts.
+- 🗺️ **Interactive Leaflet Maps**: OpenStreetMap tile integration rendering exact coordinate markers and full-screen controls.
+- 📸 **Media & Travel Guides**: YouTube Data API v3 integration providing curated destination travel videos with Unsplash photography fallbacks.
+- 🌀 **Theme-Aware Morphing Loader**: Custom animated `MorphingSpinner` component for API data fetching transitions.
+- 💾 **Persistent Query Logging & Bookmarks**: Supabase PostgreSQL database via Prisma ORM logging search history and bookmarked locations with custom notes.
+- 📑 **Server-Side Data Exports**: Streaming exports for JSON, CSV, and formatted PDF reports powered by `jspdf` and `jspdf-autotable`.
+- 🎨 **Glassmorphism Design System**: Modern Tailwind CSS design tokens with seamless dark/light theme switching via `next-themes`.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: Next.js 15 App Router, React 18, TypeScript, Tailwind CSS, TanStack Query v5, Recharts, Leaflet, Lucide Icons, `next-themes`
-- **Backend**: Next.js Route Handlers, REST APIs, Zod Schema Validation, Resilient HTTP Client (`AbortController` + Exponential Backoff)
-- **Database & ORM**: PostgreSQL (Supabase), Prisma ORM
-- **Export Engines**: `jspdf`, `jspdf-autotable`, `papaparse`
-- **Weather & Geocoding APIs**: Open-Meteo API (100% Free, No Key Required), YouTube Data API v3, Unsplash API
+| Layer | Technologies & Tools |
+| :--- | :--- |
+| **Frontend Framework** | Next.js 15 (App Router), React 18, TypeScript |
+| **Styling & Theme** | Tailwind CSS v3, Glassmorphism, HSL Tokens, `next-themes` |
+| **State & Fetching** | TanStack Query v5 (React Query), `useSearchParams`, Custom Fetch Wrapper |
+| **Data Visualizations** | Recharts, Leaflet / React-Leaflet (OpenStreetMap) |
+| **UX & UI Components** | `react-joyride`, Lucide Icons, Custom Morphing Spinner, Gradient Shimmers |
+| **Backend API** | Next.js Route Handlers, Zod Validation, Resilient Retry Client |
+| **Database & ORM** | Supabase PostgreSQL, Prisma ORM |
+| **Export Stream Engines**| `jspdf`, `jspdf-autotable`, `papaparse` |
+| **External APIs** | Open-Meteo API (100% Free, Zero Key Required), YouTube Data API v3, Unsplash API |
+
+---
+
+## 📂 Project Architecture
+
+```
+weather-forecast/
+├── prisma/
+│   └── schema.prisma         # Prisma ORM PostgreSQL schema
+├── public/                    # Static assets
+├── src/
+│   ├── app/                   # Next.js 15 App Router pages & API routes
+│   │   ├── (dashboard)/       # Layout group (search, forecast, history, saved, about)
+│   │   ├── api/               # Serverless route handlers (weather, history, saved, export, youtube)
+│   │   ├── globals.css        # Global Tailwind CSS tokens & glassmorphic utility classes
+│   │   ├── icon.tsx           # Dynamic Edge-runtime favicon generator (Next.js OG)
+│   │   └── page.tsx           # Home Dashboard page
+│   ├── components/            # Modular React components
+│   │   ├── charts/            # Recharts temperature & precipitation components
+│   │   ├── forecast/          # Daily & hourly forecast grids
+│   │   ├── layout/            # Navbar, Footer, Navigation
+│   │   ├── maps/              # Leaflet OpenStreetMap component
+│   │   ├── media/             # YouTube videos & Unsplash photos
+│   │   ├── providers/         # NextThemesProvider & TourProvider
+│   │   ├── search/            # SearchBar & Autocomplete
+│   │   ├── ui/                # MorphingSpinner, Shimmers, buttons
+│   │   └── weather/           # CurrentWeatherCard & WeatherDetailsGrid
+│   ├── lib/                   # Utility helpers (`cn`, `prisma`)
+│   ├── services/              # Business logic (weather, history, location)
+│   └── types/                 # TypeScript interfaces & Zod validation schemas
+└── .env                       # Environment configuration
+```
+
+---
+
+## 📡 REST API Reference
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/weather/search` | `POST` | Executes weather search, fetches Open-Meteo metrics, and logs record to Supabase |
+| `/api/weather/current` | `GET` | Fetches current weather for a location string or lat/lon coordinates |
+| `/api/weather/forecast` | `GET` | Fetches 5-day daily and 24-hour hourly forecast payload |
+| `/api/history` | `GET` | Retrieves paginated search history logs from the database |
+| `/api/history/:id` | `PUT` | Updates custom notes or location title on a historical search record |
+| `/api/history/:id` | `DELETE` | Deletes a specific search history entry |
+| `/api/saved` | `GET / POST` | Fetches or creates bookmarked saved locations |
+| `/api/saved/:id` | `DELETE` | Removes a bookmarked saved location |
+| `/api/export/json` | `GET` | Streams search history database logs as JSON |
+| `/api/export/csv` | `GET` | Streams search history database logs as CSV (`papaparse`) |
+| `/api/export/pdf` | `GET` | Generates formatted PDF database report (`jspdf`) |
+| `/api/youtube` | `GET` | Retrieves destination travel videos or Unsplash photos |
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
-- Node.js 18.x or 20.x
-- npm or pnpm
-- Supabase PostgreSQL Database URL (or local PostgreSQL)
+- **Node.js**: `18.x` or `20.x`
+- **npm** or **pnpm**
+- **PostgreSQL Database**: Supabase instance or local PostgreSQL
 
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/weather-intelligence-dashboard.git
-cd weather-intelligence-dashboard
+git clone https://github.com/kanakesh2006/weather_forecast.git
+cd weather_forecast
 
 # Install dependencies
 npm install
@@ -50,16 +116,26 @@ npm install
 npx prisma db push
 ```
 
-### 3. Environment Variables
-Create a `.env` file in the root directory (see `.env.example`):
+### 3. Environment Setup
+Create a `.env` file in the root directory:
 
 ```env
+# Supabase PostgreSQL Connection Strings
 DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:6543/postgres?pgbouncer=true"
 DIRECT_URL="postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres"
+
+# Weather API Configuration (Open-Meteo is 100% free, no key required)
 WEATHER_API_PROVIDER="open-meteo"
-YOUTUBE_API_KEY="your_youtube_api_key_optional"
-UNSPLASH_ACCESS_KEY="your_unsplash_key_optional"
+
+# YouTube Data API v3 Key (Optional — fallbacks to Unsplash photography)
+YOUTUBE_API_KEY="your_youtube_api_key"
+
+# Unsplash Access Key (Optional — 100% free API)
+UNSPLASH_ACCESS_KEY="your_unsplash_access_key"
+
+# Application URL
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXT_PUBLIC_DEFAULT_UNITS="metric"
 ```
 
 ### 4. Run Development Server
@@ -67,26 +143,6 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 📡 REST API Documentation
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/weather/current?query=Tokyo` | Fetches current weather by location string or `lat` & `lon` |
-| `GET` | `/api/weather/forecast?query=Tokyo` | Fetches 5-day daily and 24-hour hourly forecast payload |
-| `POST` | `/api/weather/search` | Performs weather query and auto-logs search record to database |
-| `GET` | `/api/history?page=1&limit=10` | Returns paginated database search history |
-| `PUT` | `/api/history/:id` | Updates user notes or location display title on a search record |
-| `DELETE` | `/api/history/:id` | Deletes a specific search history record |
-| `GET` | `/api/export/json` | Streams search history database logs as JSON file |
-| `GET` | `/api/export/csv` | Streams search history database logs as CSV file |
-| `GET` | `/api/export/pdf` | Generates formatted PDF database report |
-| `GET` | `/api/maps?query=Tokyo` | Returns OpenStreetMap embed coordinates and direct links |
-| `GET` | `/api/youtube?query=Tokyo` | Fetches destination travel guide videos or photo fallbacks |
-| `GET / POST` | `/api/saved` | Manages bookmarked saved locations |
-| `DELETE` | `/api/saved/:id` | Deletes a bookmarked saved location |
 
 ---
 
@@ -114,10 +170,16 @@ model WeatherHistory {
   sunrise            String
   sunset             String
   searchedAt         DateTime @default(now())
+  startDate          DateTime?
+  endDate            DateTime?
   forecast           Json
   notes              String?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+
+  @@index([searchedAt])
+  @@index([latitude, longitude])
+  @@index([city])
 }
 
 model SavedLocations {
@@ -130,6 +192,9 @@ model SavedLocations {
   notes     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([latitude, longitude])
+  @@index([city])
 }
 ```
 
@@ -137,9 +202,13 @@ model SavedLocations {
 
 ## 🚢 Deployment
 
-Deployed seamlessly on Vercel with Supabase PostgreSQL database hosting:
+The application is optimized for one-click deployment on **Vercel**:
 
-1. Push code to GitHub repository.
-2. Import project into Vercel dashboard.
-3. Configure `DATABASE_URL` and `DIRECT_URL` environment variables.
-4. Deploy!
+1. Push your latest code to GitHub.
+2. Connect your repository to Vercel.
+3. Set the `DATABASE_URL` and `DIRECT_URL` environment variables in Vercel settings.
+4. Deploy! Next.js will automatically handle build optimization and serverless route handlers.
+
+---
+
+Designed & Built with ❤️ for the AI Engineer Technical Assessment.

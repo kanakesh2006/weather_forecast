@@ -10,6 +10,7 @@ import { Calendar } from 'lucide-react';
 interface SearchBarProps {
   onSearch: (query: string, startDate?: string, endDate?: string) => void;
   isLoading?: boolean;
+  initialQuery?: string;
 }
 
 const PRESET_LANDMARKS = [
@@ -21,8 +22,8 @@ const PRESET_LANDMARKS = [
   { name: 'Taj Mahal', query: 'Taj Mahal' },
 ];
 
-export function SearchBar({ onSearch, isLoading = false }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+export function SearchBar({ onSearch, isLoading = false, initialQuery = '' }: SearchBarProps) {
+  const [query, setQuery] = useState(initialQuery);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [showDateRange, setShowDateRange] = useState(false);
@@ -42,6 +43,12 @@ export function SearchBar({ onSearch, isLoading = false }: SearchBarProps) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (initialQuery) {
+      setQuery(initialQuery);
+    }
+  }, [initialQuery]);
 
   // Debounced Autocomplete
   useEffect(() => {
@@ -100,7 +107,7 @@ export function SearchBar({ onSearch, isLoading = false }: SearchBarProps) {
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-4" ref={dropdownRef}>
-      <form onSubmit={handleSubmit} className="relative">
+      <form onSubmit={handleSubmit} className="tour-search-bar relative">
         <div className="relative flex items-center">
           <div className="absolute left-4 text-slate-400 dark:text-slate-500">
             {isLoading ? (
@@ -140,7 +147,7 @@ export function SearchBar({ onSearch, isLoading = false }: SearchBarProps) {
             type="button"
             onClick={() => setShowDateRange((prev) => !prev)}
             title="Toggle Date Range filter"
-            className={`absolute right-12 p-2.5 rounded-xl border transition-all flex items-center justify-center ${
+            className={`tour-date-range absolute right-12 p-2.5 rounded-xl border transition-all flex items-center justify-center ${
               showDateRange || startDate || endDate
                 ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-500/20'
                 : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -156,7 +163,7 @@ export function SearchBar({ onSearch, isLoading = false }: SearchBarProps) {
             onClick={handleGPSLocation}
             disabled={gpsLoading}
             title="Use current GPS location"
-            className="absolute right-2 p-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md shadow-blue-500/20 active:scale-95 transition-all duration-200 flex items-center justify-center"
+            className="tour-gps-button absolute right-2 p-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md shadow-blue-500/20 active:scale-95 transition-all duration-200 flex items-center justify-center"
           >
             {gpsLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
